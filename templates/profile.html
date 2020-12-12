@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Создание новой публикации {% endblock %}
+{% load user_filters %}
+{% block content %}
+  <main role="main" class="container">
+    <div class="row">
+      {% include 'includes/author_subscribe.html' with profile=author%}
+      <div class="col-md-9">
+        {% for post in page %}
+          {% include 'includes/post_item.html' %}
+        {% endfor %}
+        {% include "includes/paginator.html" %}
+      </div>
+    </div>
+  </main>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if post %}
+    Редактирование публикации
+  {% else %}
+    Создание новой публикации
+  {% endif %}
+{% endblock %}
+{% load user_filters %}
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      {% if post %}
+        Редактируем пост
+      {% else %}
+        Новый пост
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          {% for field in form %}
+            {{ field.label }}
+            {{ field|addclass:"form-control" }}
+            {% if  field.help_text %}
+              {{ field.help_text }}
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">
+          {% if user.is_authenticated %} Сохранить {% else %} Опубликовать {% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
