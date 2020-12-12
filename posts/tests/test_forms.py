@@ -140,7 +140,7 @@ class PostCreateFormTests(TestCase):
 
     def test_anonymous_can_not_comment(self):
         form_data = {
-            'text': 'absolutely tesitng comment',
+            'text': 'absolutely useless comment',
         }
         login_url = reverse('login')
         redirect_url = (f'{login_url}'

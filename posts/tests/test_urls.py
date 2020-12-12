@@ -91,7 +91,7 @@ class StaticURLTests(TestCase):
                                          f'?next='
                                          f'{cls.unfollow_new_url}')
 
-        max_post_pk = cls.user.posts.aggregate(Max("pk"))['pk__max']
+        max_post_pk = cls.user.posts.aggregate(Max('pk'))['pk__max']
         cls.unreacheable_page_url = reverse(
                                         'post',
                                         kwargs={'username': cls.user.username,
@@ -201,5 +201,3 @@ class StaticURLTests(TestCase):
             with self.subTest(value=path):
                 response = self.authorized_client.get(path)
                 self.assertTemplateUsed(response, template)
-
-

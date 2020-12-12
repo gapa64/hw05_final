@@ -65,4 +65,3 @@ class PostModelTest(TestCase):
         expected_value = self.group_dummy_title
         actual_value = self.post.group.__str__()
         self.assertEqual(actual_value, expected_value)
-
