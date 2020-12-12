@@ -103,6 +103,7 @@ class PostViewsTests(TestCase):
         super().tearDownClass()
 
     def setUp(self):
+        self.guest_client = Client()
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
@@ -344,4 +345,19 @@ class PostViewsTests(TestCase):
         actual_value = self.user_wrong in new_subscriptions
         self.assertEqual(actual_value, expected_value)
 
+    def test_anyone_can_read_comments(self):
+        Comment.objects.create(text='test_comment',
+                               author=self.user,
+                               post=self.post)
+        expected_value = tuple(self.post.comments.all())
+        post_url = reverse('post', kwargs={'username': self.user,
+                                           'post_id': self.post.pk})
+        with self.subTest(value='auhtorized'):
+            response = self.authorized_client.get(post_url)
+            actual_value = tuple(response.context.get('comments'))
+            self.assertEqual(actual_value, expected_value)
 
+        with self.subTest(value='anonymus'):
+            response = self.guest_client.get(post_url)
+            actual_value = tuple(response.context.get('comments'))
+            self.assertEqual(actual_value, expected_value)

@@ -38,7 +38,8 @@ class Post(models.Model):
                               null=True)
     image = models.ImageField(upload_to='posts/',
                               blank=True,
-                              null=True)
+                              null=True,
+                              verbose_name='Изображение')
 
     class Meta:
         ordering = ('-pub_date',)
@@ -52,7 +53,7 @@ class Comment(models.Model):
     author = models.ForeignKey(User,
                                on_delete=models.CASCADE,
                                related_name='comments',
-                               verbose_name='Коментарий')
+                               verbose_name='Коментатор')
     created = models.DateTimeField(verbose_name='Дата создания',
                                    auto_now_add=True)
     post = models.ForeignKey(Post,
@@ -61,6 +62,7 @@ class Comment(models.Model):
                              help_text='Добавьте Ваш комментарий')
     text = models.TextField(verbose_name='Текст публикации',
                             help_text='Введите текст публикации')
+
 
 class Follow(models.Model):
 
@@ -73,4 +75,8 @@ class Follow(models.Model):
                                related_name='following',
                                on_delete=models.CASCADE,
                                verbose_name='Подписан на кого')
-
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'author'],
+                                    name='unique_follow')
+        ]

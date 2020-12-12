@@ -16,7 +16,7 @@ class PostModelTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.post_dummy_text = "01234567890123456789"
+        cls.post_dummy_text = '01234567890123456789'
         cls.group_dummy_title = 'test_title'
         cls.user = get_user_model().objects.create_user(username='test_name',
                                                         password='test_pwd',
@@ -43,18 +43,18 @@ class PostModelTest(TestCase):
                 'description': 'Описание группы'
             }
         }
-        self.__attribute_test(self.post, "verbose_name",
-                              verbose_name_database["Post_verbose_names"])
-        self.__attribute_test(self.post.group, "verbose_name",
-                              verbose_name_database["Group_verbose_names"])
+        self.__attribute_test(self.post, 'verbose_name',
+                              verbose_name_database['Post_verbose_names'])
+        self.__attribute_test(self.post.group, 'verbose_name',
+                              verbose_name_database['Group_verbose_names'])
 
     def test_help_name(self):
         help_database = {
-            "text": "Введите текст публикации",
-            "group": "Добавьте группу если хотите, "
-                     "но вообще это не обязательно!",
+            'text': 'Введите текст публикации',
+            'group': 'Добавьте группу если хотите, '
+                     'но вообще это не обязательно!',
         }
-        self.__attribute_test(self.post, "help_text", help_database)
+        self.__attribute_test(self.post, 'help_text', help_database)
 
     def test_post_str(self):
         expected_value = self.post_dummy_text[:15]
